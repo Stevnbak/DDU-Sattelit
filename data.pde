@@ -1,17 +1,16 @@
 private String apiKey = "2DRLZD-96QEZP-7E3F56-4Y5O";
-private String satId = "25544";
 private int points = 2;
-public ArrayList<PVector> positions = new ArrayList<PVector>();
 
-void getData() {
+void getData(String satId) {
     String requestURL = "https://api.n2yo.com/rest/v1/satellite/positions/" + satId + "/41.702/-76.014/0/" + points + "/&apiKey=" + apiKey;
     JSONObject data = loadJSONObject(requestURL);
     JSONArray positionData = data.getJSONArray("positions");
-    for(int i = 0; i < positionData.size(); i++) {
-      PVector pos = convert(positionData.getJSONObject(i).getFloat("satlatitude"),positionData.getJSONObject(i).getFloat("satlongitude"),positionData.getJSONObject(i).getFloat("sataltitude"));
-      println(pos);
-      positions.add(pos);
+    ArrayList<PVector> positions = new ArrayList<PVector>();
+    for (int i = 0; i < positionData.size(); i++) {
+        PVector pos = convert(positionData.getJSONObject(i).getFloat("satlatitude"),positionData.getJSONObject(i).getFloat("satlongitude"),positionData.getJSONObject(0).getFloat("sataltitude"));
+        positions.add(pos);
     }
+    sattelites.add(new Sattelit(satId, data, positions));
 }
 
 PVector convert(float lat, float lon, float h) {
