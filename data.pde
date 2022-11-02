@@ -1,17 +1,17 @@
-private JSONObject data;
 private String apiKey = "2DRLZD-96QEZP-7E3F56-4Y5O";
 private String satId = "25544";
-public PVector pos1;
-public PVector pos2;
+private int points = 2;
+public ArrayList<PVector> positions = new ArrayList<PVector>();
 
 void getData() {
-    String requestURL = "https://api.n2yo.com/rest/v1/satellite/positions/" + satId + "/41.702/-76.014/0/2/&apiKey=" + apiKey;
-    data = loadJSONObject(requestURL);
-    JSONArray positions = data.getJSONArray("positions");
-    PVector pos1 = convert(positions.getJSONObject(0).getFloat("satlatitude"),positions.getJSONObject(0).getFloat("satlongitude"),positions.getJSONObject(0).getFloat("sataltitude"));
-    PVector pos2 = convert(positions.getJSONObject(1).getFloat("satlatitude"),positions.getJSONObject(1).getFloat("satlongitude"),positions.getJSONObject(1).getFloat("sataltitude"));
-    println(pos1);
-    println(pos2);
+    String requestURL = "https://api.n2yo.com/rest/v1/satellite/positions/" + satId + "/41.702/-76.014/0/" + points + "/&apiKey=" + apiKey;
+    JSONObject data = loadJSONObject(requestURL);
+    JSONArray positionData = data.getJSONArray("positions");
+    for(int i = 0; i < positionData.size(); i++) {
+      PVector pos = convert(positionData.getJSONObject(i).getFloat("satlatitude"),positionData.getJSONObject(i).getFloat("satlongitude"),positionData.getJSONObject(i).getFloat("sataltitude"));
+      println(pos);
+      positions.add(pos);
+    }
 }
 
 PVector convert(float lat, float lon, float h) {
