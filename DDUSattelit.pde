@@ -6,6 +6,7 @@ boolean left = false;
 boolean right = false;
 boolean up = false;
 boolean down = false;
+boolean mouseClick = false;
 float scale = 1;
 boolean zoomIn = false;
 boolean zoomOut = false;
@@ -13,8 +14,12 @@ boolean zoomOut = false;
 public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 
 void setup() {
+    //Basic
     size(1080,720,P3D);
+    //Create satelites:
     getData("25544");
+    getData("25543");
+    //Earth & Background:
     background(0);
     earthTexture = loadImage("earth.jpg");
     noStroke();
@@ -39,6 +44,14 @@ void keyPressed() {
     } else if (key == 'f') {
         zoomOut = true;
     }
+}
+
+void mousePressed() {
+    mouseClick = true;
+}
+
+void mouseReleased() {
+    mouseClick = false;
 }
 
 void keyReleased() {
@@ -76,6 +89,7 @@ void draw() {
         scale -= 0.01;
     }
     background(0);
+    pushMatrix();
     translate(width * 0.5, height * 0.5);
     rotateY(Yrotation * 0.01);
     rotateX(Xrotation * 0.01);
@@ -85,4 +99,7 @@ void draw() {
     for (int i = 0; i < sattelites.size(); i++) {
         sattelites.get(i).draw();
     }
+    popMatrix();
+    //Draw buttons
+    displayButtons();
 }
