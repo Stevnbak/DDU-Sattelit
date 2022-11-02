@@ -6,12 +6,14 @@ boolean left = false;
 boolean right = false;
 boolean up = false;
 boolean down = false;
+float scale = 1;
 
 public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 
 void setup() {
     size(1080,720,P3D);
     getData("25544");
+    background(0);
     earthTexture = loadImage("earth.jpg");
     noStroke();
     textureMode(NORMAL);
@@ -20,16 +22,21 @@ void setup() {
 }
 
 void keyPressed() {
-    if (key == 'a') {
-        left = true;
-    } else if (key == 'd') {
-        right = true;
-    }
-    if (key == 'w') {
-        up = true;
-    } else if (key == 's') {
-        down = true;
-    }
+  if (key == 'a') {
+    left = true;
+  } else if (key == 'd') {
+    right = true;
+  }
+  if (key == 'w') {
+    up = true;
+  } else if (key == 's') {
+    down = true;
+  }
+  if (key == 'r') {
+    scale += 0.1;
+  } else if (key == 'f') {
+    scale -= 0.1;
+  }
 }
 
 void keyReleased() {
@@ -46,18 +53,20 @@ void keyReleased() {
 }
 
 void draw() {
-    if (left) {
-        Yrotation++;
-    } else if (right) {
-        Yrotation--;
-    }
-    if (up) {
-        Xrotation--;
-    } else if (down) {
-        Xrotation++;
-    }
-    translate(width * 0.5, height * 0.5);
-    rotateY(Yrotation * 0.01);
-    rotateX(Xrotation * 0.01);
-    shape(earth);
+  if (left) {
+    Yrotation++;
+  } else if (right) {
+    Yrotation--;
+  }
+  if (up) {
+    Xrotation--;
+  } else if (down) {
+    Xrotation++;
+  }
+  background(0);
+  translate(width*0.5, height*0.5);
+  rotateY(Yrotation*0.01);
+  rotateX(Xrotation*0.01);
+  scale(scale);
+  shape(earth);
 }
