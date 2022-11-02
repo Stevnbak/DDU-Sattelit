@@ -7,6 +7,8 @@ boolean right = false;
 boolean up = false;
 boolean down = false;
 float scale = 1;
+boolean zoomIn = false;
+boolean zoomOut = false;
 
 public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 
@@ -33,9 +35,9 @@ void keyPressed() {
     down = true;
   }
   if (key == 'r') {
-    scale += 0.1;
+    zoomIn = true;
   } else if (key == 'f') {
-    scale -= 0.1;
+    zoomOut = true;
   }
 }
 
@@ -50,6 +52,11 @@ void keyReleased() {
     } else if (key == 's') {
         down = false;
     }
+    if (key == 'r') {
+      zoomIn = false;
+    } else if (key == 'f') {
+      zoomOut = false;
+    }
 }
 
 void draw() {
@@ -62,6 +69,11 @@ void draw() {
     Xrotation--;
   } else if (down) {
     Xrotation++;
+  }
+  if (zoomIn) {
+    scale += 0.01;
+  } else if (zoomOut) {
+    scale -= 0.01;
   }
   background(0);
   translate(width*0.5, height*0.5);
