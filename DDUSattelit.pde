@@ -19,26 +19,26 @@ void setup() {
     earthTexture = loadImage("earth.jpg");
     noStroke();
     textureMode(NORMAL);
-    earth = createShape(SPHERE, 150);
+    earth = createShape(SPHERE, 6371);
     earth.setTexture(earthTexture);
 }
 
 void keyPressed() {
-  if (key == 'a') {
-    left = true;
-  } else if (key == 'd') {
-    right = true;
-  }
-  if (key == 'w') {
-    up = true;
-  } else if (key == 's') {
-    down = true;
-  }
-  if (key == 'r') {
-    zoomIn = true;
-  } else if (key == 'f') {
-    zoomOut = true;
-  }
+    if (key == 'a') {
+        left = true;
+    } else if (key == 'd') {
+        right = true;
+    }
+    if (key == 'w') {
+        up = true;
+    } else if (key == 's') {
+        down = true;
+    }
+    if (key == 'r') {
+        zoomIn = true;
+    } else if (key == 'f') {
+        zoomOut = true;
+    }
 }
 
 void keyReleased() {
@@ -53,32 +53,36 @@ void keyReleased() {
         down = false;
     }
     if (key == 'r') {
-      zoomIn = false;
+        zoomIn = false;
     } else if (key == 'f') {
-      zoomOut = false;
+        zoomOut = false;
     }
 }
 
 void draw() {
-  if (left) {
-    Yrotation++;
-  } else if (right) {
-    Yrotation--;
-  }
-  if (up) {
-    Xrotation--;
-  } else if (down) {
-    Xrotation++;
-  }
-  if (zoomIn) {
-    scale += 0.01;
-  } else if (zoomOut) {
-    scale -= 0.01;
-  }
-  background(0);
-  translate(width*0.5, height*0.5);
-  rotateY(Yrotation*0.01);
-  rotateX(Xrotation*0.01);
-  scale(scale);
-  shape(earth);
+    if (left) {
+        Yrotation++;
+    } else if (right) {
+        Yrotation--;
+    }
+    if (up) {
+        Xrotation--;
+    } else if (down) {
+        Xrotation++;
+    }
+    if (zoomIn) {
+        scale += 0.01;
+    } else if (zoomOut) {
+        scale -= 0.01;
+    }
+    background(0);
+    translate(width * 0.5, height * 0.5);
+    rotateY(Yrotation * 0.01);
+    rotateX(Xrotation * 0.01);
+    scale(scale * 0.033);
+    shape(earth);
+    
+    for (int i = 0; i < sattelites.size(); i++) {
+        sattelites.get(i).draw();
+    }
 }
