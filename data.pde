@@ -23,5 +23,4 @@ PVector convert(float lat, float lon, float h) {
     float z = -h * cos(theta) * sin(phi);
     
     return new PVector(x, y, z);
-    
 }

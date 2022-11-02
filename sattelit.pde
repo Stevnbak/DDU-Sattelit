@@ -1,5 +1,6 @@
 class Sattelit {
     public String id;
+    public String name;
     public JSONObject info;
     public ArrayList<PVector> positions = new ArrayList<PVector>();
     public PVector drawPosition;
@@ -8,10 +9,11 @@ class Sattelit {
         id = newId;
         info = data;
         positions = dataPositions;
-        for (int i = 0; i < positions.size(); i++) {
-            println(i + ": " + positions.get(i));
-        }
         drawPosition = positions.get(0);
+        //Name
+        name = data.getJSONObject("info").getString("satname");
+        //Button
+        setupButton(this);
     }
     
     void draw() {
