@@ -18,7 +18,7 @@ void setup() {
     size(1080,720,P3D);
     //Create satelites:
     getData("25544");
-    getData("25543");
+    getData("52797");
     //Earth & Background:
     background(0);
     earthTexture = loadImage("earth.jpg");
