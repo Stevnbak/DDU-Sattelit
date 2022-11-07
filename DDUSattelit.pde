@@ -12,6 +12,7 @@ boolean zoomIn = false;
 boolean zoomOut = false;
 
 public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
+public Sattelit selectedSattelite;
 
 void setup() {
     //Basic
@@ -99,7 +100,22 @@ void draw() {
     for (int i = 0; i < sattelites.size(); i++) {
         sattelites.get(i).draw();
     }
+    //Highlight selected sattelite:
+    if(selectedSattelite != null) {
+        //println(selectedSattelite.name);
+    }
+
     popMatrix();
+    hint(DISABLE_DEPTH_TEST); //draws on top of whatever is drawn on screen
+    
+    ortho(); //orthographic projection removes any need for the z axis
     //Draw buttons
     displayButtons();
+    //Draw sattelite info
+    if(selectedSattelite != null) {
+        displayInfo(selectedSattelite);
+    }
+
+    //Reset:
+    hint(ENABLE_DEPTH_TEST); 
 }
