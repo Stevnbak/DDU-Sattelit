@@ -74,6 +74,7 @@ void keyReleased() {
 }
 
 void draw() {
+    //Rotation
     if (left) {
         Yrotation++;
     } else if (right) {
@@ -84,17 +85,24 @@ void draw() {
     } else if (down) {
         Xrotation++;
     }
+    //Zoom
     if (zoomIn) {
         scale += 0.01;
     } else if (zoomOut) {
         scale -= 0.01;
     }
+    scale = constrain(scale, 0.5, 2.33);
+    
+    //Draw...
     background(0);
     pushMatrix();
+    //Move, Scale and Rotate everything
     translate(width * 0.5, height * 0.5);
     rotateY(Yrotation * 0.01);
     rotateX(Xrotation * 0.01);
     scale(scale * 0.033);
+
+    //Draw Earth
     shape(earth);
     
     for (int i = 0; i < sattelites.size(); i++) {
@@ -103,19 +111,16 @@ void draw() {
     //Highlight selected sattelite:
     if(selectedSattelite != null) {
         //println(selectedSattelite.name);
+
     }
 
     popMatrix();
-    hint(DISABLE_DEPTH_TEST); //draws on top of whatever is drawn on screen
-    
-    ortho(); //orthographic projection removes any need for the z axis
+    hint(DISABLE_DEPTH_TEST); //Enable GUI on top
     //Draw buttons
     displayButtons();
     //Draw sattelite info
     if(selectedSattelite != null) {
         displayInfo(selectedSattelite);
     }
-
-    //Reset:
-    hint(ENABLE_DEPTH_TEST); 
+    hint(ENABLE_DEPTH_TEST); //Return to non GUI
 }
