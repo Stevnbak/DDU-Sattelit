@@ -18,9 +18,9 @@ PVector convert(float lat, float lon, float h) {
     float phi = radians(lon) + PI;
     
     // fix: in OpenGL, y & z axes are flipped from math notation of spherical coordinates
-    float x = h * cos(theta) * cos(phi);
-    float y = -h * sin(theta);
-    float z = -h * cos(theta) * sin(phi);
+    float x = (h+6371) * cos(theta) * cos(phi);
+    float y = -(h+6371) * sin(theta);
+    float z = -(h+6371) * cos(theta) * sin(phi);
     
     return new PVector(x, y, z);
 }
