@@ -1,12 +1,16 @@
 PShape earth;
 PImage earthTexture;
+float earthRadius = 6371;
+
 float Yrotation = 0;
 float Xrotation = 0;
+
 boolean left = false;
 boolean right = false;
 boolean up = false;
 boolean down = false;
 boolean mouseClick = false;
+
 float scale = 1;
 boolean zoomIn = false;
 boolean zoomOut = false;
@@ -17,6 +21,7 @@ public Sattelit selectedSattelite;
 void setup() {
     //Basic
     size(1080,720,P3D);
+    perspective(PI/3.0, float(width)/float(height), 250, 25000);
     //Create satelites:
     getData("25544");
     getData("52797");
@@ -25,7 +30,7 @@ void setup() {
     earthTexture = loadImage("earth.jpg");
     noStroke();
     textureMode(NORMAL);
-    earth = createShape(SPHERE, 6371);
+    earth = createShape(SPHERE, earthRadius);
     earth.setTexture(earthTexture);
 }
 
@@ -46,15 +51,12 @@ void keyPressed() {
         zoomOut = true;
     }
 }
-
 void mousePressed() {
     mouseClick = true;
 }
-
 void mouseReleased() {
     mouseClick = false;
 }
-
 void keyReleased() {
     if (key == 'a') {
         left = false;
@@ -76,38 +78,38 @@ void keyReleased() {
 void draw() {
     //Rotation
     if (left) {
-        Yrotation++;
-    } else if (right) {
         Yrotation--;
+    } else if (right) {
+        Yrotation++;
     }
     if (up) {
-        Xrotation--;
-    } else if (down) {
         Xrotation++;
+    } else if (down) {
+        Xrotation--;
     }
     //Zoom
     if (zoomIn) {
-        scale += 0.01;
+        scale += 0.1;
     } else if (zoomOut) {
-        scale -= 0.01;
+        scale -= 0.1;
     }
-    scale = constrain(scale, 0.5, 2.33);
+    scale = constrain(scale, -4, 13.5);
     
     //Draw...
     background(0);
     pushMatrix();
-    //Move, Scale and Rotate everything
-    translate(width * 0.5, height * 0.5);
-    rotateY(Yrotation * 0.01);
-    rotateX(Xrotation * 0.01);
-    scale(scale * 0.033);
+    //Camera stuff
+    PVector camLocation = convert(Xrotation, Yrotation, earthRadius + scale * 1000);
+    camera(camLocation.x, camLocation.y, camLocation.z, width/2.0, height/2.0, 0, 0, 1, 0);
 
     //Draw Earth
     shape(earth);
     
+    //Draw sattelites
     for (int i = 0; i < sattelites.size(); i++) {
         sattelites.get(i).draw();
     }
+
     //Highlight selected sattelite:
     if(selectedSattelite != null) {
         //println(selectedSattelite.name);
@@ -115,6 +117,7 @@ void draw() {
     }
 
     popMatrix();
+
     hint(DISABLE_DEPTH_TEST); //Enable GUI on top
     //Draw buttons
     displayButtons();
