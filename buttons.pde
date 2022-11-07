@@ -46,8 +46,13 @@ class Button {
         noStroke();
         textFont(font);
         textSize(size.y / 4 * 3);
-        textAlign(CENTER, CENTER);
-        text(text, location.x, location.y);
+        if(textWidth(text) > size.x) {
+            textAlign(LEFT, CENTER);
+            text(text, location.x - size.x/2, location.y);
+        } else {
+            textAlign(CENTER, CENTER);
+            text(text, location.x, location.y);
+        }
         textAlign(LEFT);
     }
     
@@ -66,7 +71,7 @@ int amount = 0;
 void setupButton(Sattelit sat) {
     println(sat.name);
     if(sat == null) return;
-    Button button = new Button(new PVector(100, 25 + amount * 25), new PVector(200, 25), sat.name, sat.colorValue, () -> {
+    Button button = new Button(new PVector(100, 13 + amount * 25), new PVector(200, 25), sat.name, sat.colorValue, () -> {
         println("Clicked sattelite button for: " + sat.name);
         selectedSattelite = sat;
     });

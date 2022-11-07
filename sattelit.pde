@@ -3,8 +3,9 @@ class Sattelit {
     public String id;
     public String name;
     public JSONObject info;
+    public float size;
     //Position info
-    public float lat, lng, alt;
+    public float alt;
     public ArrayList<PVector> positions = new ArrayList<PVector>();
     //Draw info
     public PVector drawPosition;
@@ -16,9 +17,8 @@ class Sattelit {
         info = data;
 
         positions = dataPositions;
-        lat = info.getJSONArray("positions").getJSONObject(0).getFloat("satlatitude");
-        lng = info.getJSONArray("positions").getJSONObject(0).getFloat("satlongitude");
         alt = info.getJSONArray("positions").getJSONObject(0).getFloat("sataltitude");
+
         drawPosition = positions.get(0);
         //Name
         name = data.getJSONObject("info").getString("satname");
@@ -29,11 +29,12 @@ class Sattelit {
     }
     
     void draw() {
-        pushMatrix();
-        translate(drawPosition.x, drawPosition.y, drawPosition.z);
         noStroke();
         fill(colorValue);
-        shape(createShape(SPHERE, 50));
+        pushMatrix();
+        translate(drawPosition.x, drawPosition.y, drawPosition.z);
+        sphere(size);
         popMatrix();
+        size = 100;
     }
 }

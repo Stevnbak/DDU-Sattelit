@@ -25,6 +25,13 @@ void setup() {
     //Create satelites:
     getData("25544");
     getData("52797");
+    getData("39197");
+    getData("33493");
+    getData("28376");
+    getData("21087");
+    //getData("25661");
+    getData("41852");
+    println("Retrieved data for all sattelites");
     //Earth & Background:
     background(0);
     earthTexture = loadImage("earth.jpg");
@@ -53,6 +60,7 @@ void keyPressed() {
 }
 void mousePressed() {
     mouseClick = true;
+    selectedSattelite = null;
 }
 void mouseReleased() {
     mouseClick = false;
@@ -104,18 +112,43 @@ void draw() {
 
     //Draw Earth
     shape(earth);
+
+    //Highlight selected sattelite:
+    if(selectedSattelite != null) {
+        pushMatrix();
+        PVector center = new PVector(0,0,0);
+        PVector retning1 = selectedSattelite.positions.get(0).get();
+        PVector retning2 = selectedSattelite.positions.get(1).get();
+        retning1.normalize();
+        retning2.normalize();
+        PVector cross = new PVector();
+        PVector.cross(retning1,retning2,cross);
+
+
+        //Translate + Rotate
+        float angleX = atan(retning1.y/retning1.z);
+        float angleY = atan(retning1.z/retning1.x);
+
+        rotateX(-angleX);
+        rotateY(angleY);
+        //Draw orbit:
+        beginShape();
+        noFill();
+        stroke(selectedSattelite.colorValue);
+        strokeWeight(3);
+        for(int i = 1; i< 24; i++) {
+            curveVertex((selectedSattelite.alt + earthRadius) * sin(0.1*PI*i), 0, (selectedSattelite.alt + earthRadius) * cos(0.1*PI*i));
+        }
+        endShape();
+        popMatrix();
+        //Change sattelite visuals:
+        selectedSattelite.size = 200;
+    }
     
     //Draw sattelites
     for (int i = 0; i < sattelites.size(); i++) {
         sattelites.get(i).draw();
     }
-
-    //Highlight selected sattelite:
-    if(selectedSattelite != null) {
-        //println(selectedSattelite.name);
-
-    }
-
     popMatrix();
 
     hint(DISABLE_DEPTH_TEST); //Enable GUI on top
