@@ -10,10 +10,8 @@ boolean right = false;
 boolean up = false;
 boolean down = false;
 boolean mouseClick = false;
-boolean isTimePaused = true;
 
 float scale = 1;
-float timeScale = 1;
 boolean zoomIn = false;
 boolean zoomOut = false;
 
@@ -21,7 +19,7 @@ public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 public Sattelit selectedSattelite;
 
 public float time;
-long startTime;
+float startTime;
 import java.util.Date;
 
 void setup() {
@@ -30,13 +28,13 @@ void setup() {
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Create satelites:
     getData("25544");
-    getData("52797");
+    /*getData("52797");
     getData("39197");
     getData("33493");
     getData("28376");
     getData("21087");
     getData("25661");
-    getData("41852");
+    getData("41852");*/
     println("Retrieved data for all sattelites");
     //Earth & Background:
     background(0);
@@ -66,20 +64,6 @@ void keyPressed() {
     } else if (key == 'f') {
         zoomOut = true;
     }
-    if (key == ' ') {
-        if (isTimePaused) {
-            isTimePaused = false;
-        } else {
-            isTimePaused = true;
-      }
-    }
-    if (key == CODED) {
-        if (key == UP) {
-          timeScale += 0.5;
-      } else if (key == DOWN) {
-          timeScale -= 0.5;
-      }
-    }
 }
 
 void keyReleased() {
@@ -101,10 +85,8 @@ void keyReleased() {
 }
 void mousePressed() {
     mouseClick = true;
-    if(mouseButton == 37) {
-        if (selectedSattelite!=null) {selectedSattelite.size=100;}
-        selectedSattelite = null;
-    }
+    if (selectedSattelite!=null) {selectedSattelite.size=100;}
+    selectedSattelite = null;
 }
 void mouseReleased() {
     mouseClick = false;
@@ -123,10 +105,7 @@ void mouseDragged()
 }
 
 void draw() {
-    //Time manipulation
-    if (!isTimePaused) {
-      time=time+(1/frameRate)*60*timeScale;
-    }
+    time=time+(1/frameRate)*60;
     
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Rotation
@@ -149,7 +128,7 @@ void draw() {
     scale = constrain(scale, -4, 13.5);
     
     //Draw...
-    background(25);
+    background(0);
     pushMatrix();
     
     //Camera stuff
@@ -184,11 +163,12 @@ void draw() {
         displayInfo(selectedSattelite);
     }
     //Draw "current" time
-    Date d = new Date(startTime + ((long)time * 1000));
-    textSize(15);
+    textSize(20);
     fill(255);
-    String txt = "Time: " + d;
-    textAlign(LEFT, DOWN);
-    text(txt, 2 , height - 15);
+    Date d = new Date((int)(startTime + (time * 1000)));
+    println("Time: " + time);
+    println("Changed: " + d.getTime());
+    println("Real: " + new Date().getTime());
+    //text("Time: " + )
     hint(ENABLE_DEPTH_TEST); //Return to non GUI
 }
