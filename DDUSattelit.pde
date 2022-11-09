@@ -74,11 +74,16 @@ void keyPressed() {
       }
     }
     if (key == CODED) {
-        if (key == UP) {
+        if (keyCode == UP) {
           timeScale += 0.5;
-      } else if (key == DOWN) {
+        } else if (keyCode == DOWN) {
           timeScale -= 0.5;
-      }
+        }
+        if (keyCode == RIGHT) {
+          time += 300*timeScale;
+        } else if (keyCode == LEFT) {
+          time -= 300*timeScale;
+        }
     }
 }
 
