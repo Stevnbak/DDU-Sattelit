@@ -26,16 +26,18 @@ class Sattelit {
         
         //Name
         name = data.getJSONObject("info").getString("satname");
-        //Colour
-        colorValue = color(int(random(125,255)),int(random(125,255)),int(random(125,255)));
+        //Color
+        colorMode(HSB,360,100,100);
+        colorValue = color(int(random(0,360)),int(random(40,55)),int(random(85,95)));
         for (int i=0;i<sattelites.size();i++)
         {
           if (colorValue==sattelites.get(i).colorValue)
           {
-             colorValue = color(int(random(125,255)),int(random(125,255)),int(random(125,255)));
+             colorValue = color(int(random(0,360)),int(random(40,55)),int(random(85,95)));
              i=0;
           }
         }
+        colorMode(RGB,255);
         
         //Button
         setupButton(this);
@@ -55,7 +57,7 @@ class Sattelit {
         rotateZ(angleZ);
         
         noFill();
-        stroke(colorValue,80);
+        stroke(colorValue,72);
         strokeWeight(2);
         for (float i=0.04;i<2*PI+0.04;i+=0.04){
           line((altitude+earthRadius)*sin(i-0.02),0,(altitude+earthRadius)*cos(i-0.02),(altitude+earthRadius)*sin(i),0,(altitude+earthRadius)*cos(i));

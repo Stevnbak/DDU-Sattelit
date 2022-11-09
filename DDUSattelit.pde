@@ -12,7 +12,7 @@ boolean down = false;
 boolean mouseClick = false;
 boolean isTimePaused = false;
 
-float scale = 1;
+float scale = 5.5;
 boolean zoomIn = false;
 boolean zoomOut = false;
 
@@ -117,7 +117,7 @@ void mousePressed() {
         for (int i=0;i<sattelites.size();i++){
           if (sattelites.get(i).colorValue==get(mouseX,mouseY)){
               selectedSattelite=sattelites.get(i);
-              sattelites.get(i).size=200;
+              sattelites.get(i).size=150;
           }
         }
     }
@@ -202,9 +202,10 @@ void draw() {
     //Draw "current" time
     Date d = new Date(startTime + ((long)time * 1000));
     textSize(15);
-    fill(255);
-    String txt = "Time: " + d;
+    colorMode(RGB, 255);
+    String txt = "Speed: "+timeScale+"x\nTime: "+ d;
     textAlign(LEFT, DOWN);
-    text(txt, 2 , height - 15);
+    fill(255,255);
+    text(txt, 25 , height - 50);
     hint(ENABLE_DEPTH_TEST); //Return to non GUI
 }
