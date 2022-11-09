@@ -10,8 +10,10 @@ boolean right = false;
 boolean up = false;
 boolean down = false;
 boolean mouseClick = false;
+boolean isTimePaused = true;
 
 float scale = 1;
+float timeScale = 1;
 boolean zoomIn = false;
 boolean zoomOut = false;
 
@@ -28,13 +30,13 @@ void setup() {
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Create satelites:
     getData("25544");
-    /*getData("52797");
+    getData("52797");
     getData("39197");
     getData("33493");
     getData("28376");
     getData("21087");
     getData("25661");
-    getData("41852");*/
+    getData("41852");
     println("Retrieved data for all sattelites");
     //Earth & Background:
     background(0);
@@ -63,6 +65,20 @@ void keyPressed() {
         zoomIn = true;
     } else if (key == 'f') {
         zoomOut = true;
+    }
+    if (key == ' ') {
+        if (isTimePaused) {
+            isTimePaused = false;
+        } else {
+            isTimePaused = true;
+      }
+    }
+    if (key == CODED) {
+        if (key == UP) {
+          timeScale += 0.5;
+      } else if (key == DOWN) {
+          timeScale -= 0.5;
+      }
     }
 }
 
@@ -107,7 +123,10 @@ void mouseDragged()
 }
 
 void draw() {
-    time=time+(1/frameRate)*60;
+    //Time manipulation
+    if (!isTimePaused) {
+      time=time+(1/frameRate)*60*timeScale;
+    }
     
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Rotation

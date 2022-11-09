@@ -26,7 +26,16 @@ class Sattelit {
         //Name
         name = data.getJSONObject("info").getString("satname");
         //Colour
-        colorValue = color(random(125,255),random(125,255),random(125,255));
+        colorValue = color(int(random(125,255)),int(random(125,255)),int(random(125,255)));
+        for (int i=0;i<sattelites.size();i++)
+        {
+          if (colorValue==sattelites.get(i).colorValue)
+          {
+             colorValue = color(int(random(125,255)),int(random(125,255)),int(random(125,255)));
+             i=0;
+          }
+        }
+        
         //Button
         setupButton(this);
         // Plane
