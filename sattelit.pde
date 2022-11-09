@@ -50,10 +50,19 @@ class Sattelit {
         rotateX(angleX);
         rotateY(angleY);
         
+        noFill();
+        stroke(colorValue,80);
+        strokeWeight(2);
+        for (float i=0.04;i<2*PI+0.04;i+=0.04){
+          line((altitude+earthRadius)*sin(i-0.02),0,(altitude+earthRadius)*cos(i-0.02),(altitude+earthRadius)*sin(i),0,(altitude+earthRadius)*cos(i));
+        }
+        
+        pushMatrix();
         translate((altitude+earthRadius)*sin(angularVelocity*time),0,(altitude+earthRadius)*cos(angularVelocity*time));
         noStroke();
         fill(colorValue);
         sphere(size);
+        popMatrix();
         popMatrix();
     }
     
@@ -62,14 +71,15 @@ class Sattelit {
         rotateX(angleX);
         rotateY(angleY);
 
-        beginShape();
         noFill();
         stroke(colorValue);
         strokeWeight(3);
+        
         for(int i = 1; i< 24; i++) {
             curveVertex((altitude + earthRadius) * sin(0.1*PI*i), 0, (altitude + earthRadius) * cos(0.1*PI*i));
         }
         endShape();
+        
         popMatrix();
     }
 }
