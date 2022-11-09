@@ -10,17 +10,17 @@ boolean right = false;
 boolean up = false;
 boolean down = false;
 boolean mouseClick = false;
-boolean isTimePaused = true;
+boolean isTimePaused = false;
 
 float scale = 1;
-float timeScale = 1;
 boolean zoomIn = false;
 boolean zoomOut = false;
 
 public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 public Sattelit selectedSattelite;
 
-public float time;
+public float time = 0;
+float timeScale = 1;
 long startTime;
 import java.util.Date;
 
@@ -28,16 +28,7 @@ void setup() {
     //Basic
     size(1080,720,P3D);
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
-    //Create satelites:
-    getData("25544");
-    getData("52797");
-    getData("39197");
-    getData("33493");
-    getData("28376");
-    getData("21087");
-    getData("25661");
-    getData("41852");
-    println("Retrieved data for all sattelites");
+
     //Earth & Background:
     background(0);
     earthTexture = loadImage("earth.jpg");
@@ -45,6 +36,21 @@ void setup() {
     textureMode(NORMAL);
     earth = createShape(SPHERE, earthRadius);
     earth.setTexture(earthTexture);
+
+    //Create satelites:
+    getData("25544");
+    getData("54216");
+    getData("39197");
+    getData("33493");
+    getData("28376");
+    getData("21087");
+    getData("25661");
+    getData("41852");
+    getData("32289");
+    getData("39768");
+    getData("40298");
+    getData("54209");
+    println("Retrieved data for all sattelites");
 
     //Time
     startTime = new Date().getTime();
