@@ -142,7 +142,7 @@ void draw() {
     scale = constrain(scale, -4, 13.5);
     
     //Draw...
-    background(0);
+    background(25);
     pushMatrix();
     
     //Camera stuff
