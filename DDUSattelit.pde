@@ -39,13 +39,17 @@ void setup() {
 
     //Create satelites:
     getData("25544");
-    getData("52797");
+    getData("54216");
     getData("39197");
     getData("33493");
     getData("28376");
     getData("21087");
     getData("25661");
     getData("41852");
+    getData("32289");
+    getData("39768");
+    getData("40298");
+    getData("54209");
     println("Retrieved data for all sattelites");
 
     //Time
