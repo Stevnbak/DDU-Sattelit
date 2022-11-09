@@ -44,7 +44,6 @@ void setup() {
     getData("33493");
     getData("28376");
     getData("21087");
-    getData("25661");
     getData("41852");
     getData("32289");
     getData("39768");

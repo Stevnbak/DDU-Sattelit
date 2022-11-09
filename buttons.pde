@@ -38,11 +38,12 @@ class Button {
     }
     
     void draw() {
-        fill(colour);
+        noFill();
+        //fill(colour);
         noStroke();
-        if(hover) stroke(5);
+        if(hover) stroke(colour);
         rect(location.x, location.y, size.x, size.y);
-        fill(0);
+        fill(colour);
         noStroke();
         textFont(font);
         textSize(size.y / 4 * 3);
