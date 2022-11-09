@@ -13,6 +13,7 @@ class Sattelit {
     //Plane info
     float angleX;
     float angleY;
+    float angleZ;
     // Velocity
     float angularVelocity;
    
@@ -41,6 +42,7 @@ class Sattelit {
         // Plane
         angleX = -atan(positions.get(0).y/positions.get(0).z);
         angleY = atan(positions.get(0).z/positions.get(0).x);
+        angleZ = atan(positions.get(0).y/positions.get(0).x);
         angularVelocity=(positions.get(0).sub(positions.get(1))).mag()/(2*earthRadius+altitude);
         size=100;
     }
@@ -49,6 +51,7 @@ class Sattelit {
         pushMatrix();
         rotateX(angleX);
         rotateY(angleY);
+        rotateZ(angleZ);
         
         noFill();
         stroke(colorValue,80);
@@ -70,11 +73,12 @@ class Sattelit {
         pushMatrix();
         rotateX(angleX);
         rotateY(angleY);
+        rotateZ(angleZ);
 
         noFill();
         stroke(colorValue);
         strokeWeight(3);
-        
+        beginShape();
         for(int i = 1; i< 24; i++) {
             curveVertex((altitude + earthRadius) * sin(0.1*PI*i), 0, (altitude + earthRadius) * cos(0.1*PI*i));
         }
