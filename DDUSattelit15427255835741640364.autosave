@@ -18,12 +18,10 @@ boolean zoomOut = false;
 public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 public Sattelit selectedSattelite;
 
-public float time;
-
 void setup() {
     //Basic
     size(1080,720,P3D);
-    perspective(PI/3.0, float(width)/float(height), 50, 50000);
+    perspective(PI/3.0, float(width)/float(height), 250, 25000);
     //Create satelites:
     getData("25544");
     getData("52797");
@@ -31,7 +29,7 @@ void setup() {
     getData("33493");
     getData("28376");
     getData("21087");
-    getData("25661");
+    //getData("25661");
     getData("41852");
     println("Retrieved data for all sattelites");
     //Earth & Background:
@@ -62,7 +60,6 @@ void keyPressed() {
 }
 void mousePressed() {
     mouseClick = true;
-    if (selectedSattelite!=null){selectedSattelite.size=100;}
     selectedSattelite = null;
 }
 void mouseReleased() {
@@ -87,9 +84,6 @@ void keyReleased() {
 }
 
 void draw() {
-    time=time+(1/frameRate)*60;
-    
-    perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Rotation
     if (left) {
         Yrotation--;
@@ -121,12 +115,38 @@ void draw() {
 
     //Highlight selected sattelite:
     if(selectedSattelite != null) {
-        selectedSattelite.drawOrbit();
+        pushMatrix();
+        PVector center = new PVector(0,0,0);
+        PVector retning1 = selectedSattelite.positions.get(0).get();
+        PVector retning2 = selectedSattelite.positions.get(1).get();
+        retning1.normalize();
+        retning2.normalize();
+        PVector cross = new PVector();
+        PVector.cross(retning1,retning2,cross);
+        
+        //Translate + Rotate
+        float angleX = atan(retning1.y/retning1.z);
+        float angleY = atan(retning1.z/retning1.x);
+
+        rotateX(-angleX);
+        rotateY(angleY);
+        //Draw orbit:
+        beginShape();
+        noFill();
+        stroke(selectedSattelite.colorValue);
+        strokeWeight(3);
+        for(int i = 1; i< 24; i++) {
+            curveVertex((selectedSattelite.alt + earthRadius) * sin(0.1*PI*i), 0, (selectedSattelite.alt + earthRadius) * cos(0.1*PI*i));
+        }
+        endShape();
+        popMatrix();
+        //Change sattelite visuals:
+        selectedSattelite.size = 200;
     }
     
     //Draw sattelites
     for (int i = 0; i < sattelites.size(); i++) {
-        sattelites.get(i).drawSatelite();
+        sattelites.get(i).draw();
     }
     popMatrix();
 
