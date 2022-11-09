@@ -19,7 +19,7 @@ public ArrayList<Sattelit> sattelites = new ArrayList<Sattelit>();
 public Sattelit selectedSattelite;
 
 public float time;
-long startTime;
+float startTime;
 import java.util.Date;
 
 void setup() {
@@ -85,10 +85,8 @@ void keyReleased() {
 }
 void mousePressed() {
     mouseClick = true;
-    if(mouseButton == 37) {
-        if (selectedSattelite!=null) {selectedSattelite.size=100;}
-        selectedSattelite = null;
-    }
+    if (selectedSattelite!=null) {selectedSattelite.size=100;}
+    selectedSattelite = null;
 }
 void mouseReleased() {
     mouseClick = false;
@@ -165,11 +163,12 @@ void draw() {
         displayInfo(selectedSattelite);
     }
     //Draw "current" time
-    Date d = new Date(startTime + ((long)time * 1000));
-    textSize(15);
+    textSize(20);
     fill(255);
-    String txt = "Time: " + d;
-    textAlign(LEFT, DOWN);
-    text(txt, 2 , height - 15);
+    Date d = new Date((int)(startTime + (time * 1000)));
+    println("Time: " + time);
+    println("Changed: " + d.getTime());
+    println("Real: " + new Date().getTime());
+    //text("Time: " + )
     hint(ENABLE_DEPTH_TEST); //Return to non GUI
 }
