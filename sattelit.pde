@@ -40,10 +40,11 @@ class Sattelit {
         //Button
         setupButton(this);
         // Plane
-        angleX = -atan(positions.get(0).y/positions.get(0).z);
-        angleY = atan(positions.get(0).z/positions.get(0).x);
-        angleZ = atan(positions.get(0).y/positions.get(0).x);
-        angularVelocity=(positions.get(0).sub(positions.get(1))).mag()/(2*earthRadius+altitude);
+        PVector pos = positions.get(0).get();
+        angleX = -atan(pos.y/pos.z);
+        angleY = atan(pos.z/pos.x);
+        angleZ = atan(pos.x/pos.y);
+        angularVelocity=(positions.get(0).get().sub(positions.get(1).get())).mag()/(2*earthRadius+altitude);
         size=100;
     }
     
