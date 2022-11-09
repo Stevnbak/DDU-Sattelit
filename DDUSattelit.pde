@@ -21,7 +21,7 @@ public Sattelit selectedSattelite;
 void setup() {
     //Basic
     size(1080,720,P3D);
-    perspective(PI/3.0, float(width)/float(height), 250, 25000);
+    perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Create satelites:
     getData("25544");
     getData("52797");
@@ -29,7 +29,7 @@ void setup() {
     getData("33493");
     getData("28376");
     getData("21087");
-    //getData("25661");
+    getData("25661");
     getData("41852");
     println("Retrieved data for all sattelites");
     //Earth & Background:
@@ -84,6 +84,7 @@ void keyReleased() {
 }
 
 void draw() {
+    perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Rotation
     if (left) {
         Yrotation--;
@@ -116,19 +117,12 @@ void draw() {
     //Highlight selected sattelite:
     if(selectedSattelite != null) {
         pushMatrix();
-        PVector center = new PVector(0,0,0);
         PVector retning1 = selectedSattelite.positions.get(0).get();
         PVector retning2 = selectedSattelite.positions.get(1).get();
-        retning1.normalize();
-        retning2.normalize();
-        PVector cross = new PVector();
-        PVector.cross(retning1,retning2,cross);
 
-
-        //Translate + Rotate
+        //Rotate
         float angleX = atan(retning1.y/retning1.z);
         float angleY = atan(retning1.z/retning1.x);
-
         rotateX(-angleX);
         rotateY(angleY);
         //Draw orbit:
