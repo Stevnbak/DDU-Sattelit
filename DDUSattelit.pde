@@ -24,13 +24,13 @@ void setup() {
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Create satelites:
     getData("25544");
-    getData("52797");
+    /*getData("52797");
     getData("39197");
     getData("33493");
     getData("28376");
     getData("21087");
     getData("25661");
-    getData("41852");
+    getData("41852");*/
     println("Retrieved data for all sattelites");
     //Earth & Background:
     background(0);
@@ -58,13 +58,6 @@ void keyPressed() {
         zoomOut = true;
     }
 }
-void mousePressed() {
-    mouseClick = true;
-    selectedSattelite = null;
-}
-void mouseReleased() {
-    mouseClick = false;
-}
 void keyReleased() {
     if (key == 'a') {
         left = false;
@@ -82,19 +75,38 @@ void keyReleased() {
         zoomOut = false;
     }
 }
+void mousePressed() {
+    mouseClick = true;
+    selectedSattelite = null;
+}
+void mouseReleased() {
+    mouseClick = false;
+}
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  scale += e / 3;
+}
+void mouseDragged() 
+{
+    PVector previousPosition = new PVector(pmouseX, pmouseY);
+    PVector currentPosition = new PVector(mouseX, mouseY);
+    PVector moved = PVector.sub(currentPosition, previousPosition);
+    Xrotation -= moved.x * (sqrt(scale + 4.1) / 5);
+    Yrotation += moved.y * (sqrt(scale + 4.1) / 5);
+}
 
 void draw() {
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Rotation
     if (left) {
-        Yrotation--;
+        Xrotation--;
     } else if (right) {
-        Yrotation++;
+        Xrotation++;
     }
     if (up) {
-        Xrotation++;
+        Yrotation++;
     } else if (down) {
-        Xrotation--;
+        Yrotation--;
     }
     //Zoom
     if (zoomIn) {
@@ -107,9 +119,17 @@ void draw() {
     //Draw...
     background(0);
     pushMatrix();
+    
     //Camera stuff
-    PVector camLocation = convert(Xrotation, Yrotation, earthRadius + scale * 1000);
-    camera(camLocation.x, camLocation.y, camLocation.z, width/2.0, height/2.0, 0, 0, 1, 0);
+    beginCamera();
+    camera();
+    translate(0,0,-(earthRadius * 2 + scale * 1000));
+    rotateX(-radians(Yrotation));
+    rotateY(-radians(Xrotation));
+    endCamera();
+    ///PVector camLocation = convert(Yrotation, Xrotation, earthRadius + scale * 1000);
+    ///camera(camLocation.x, camLocation.y, camLocation.z, width/2.0, height/2.0, 0, 0, 1, 0);
+
 
     //Draw Earth
     shape(earth);
