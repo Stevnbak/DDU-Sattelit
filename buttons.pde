@@ -70,10 +70,10 @@ int amount = 0;
 
 void setupButton(Sattelit sat) {
     println(sat.name);
-    if(sat == null) return;
     Button button = new Button(new PVector(100, 13 + amount * 25), new PVector(200, 25), sat.name, sat.colorValue, () -> {
         println("Clicked sattelite button for: " + sat.name);
         selectedSattelite = sat;
+        selectedSattelite.size=200;
     });
     buttons.add(button);
     amount++;
