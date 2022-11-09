@@ -26,13 +26,13 @@ void setup() {
     perspective(PI/3.0, float(width)/float(height), 50, 50000);
     //Create satelites:
     getData("25544");
-    /*getData("52797");
+    getData("52797");
     getData("39197");
     getData("33493");
     getData("28376");
     getData("21087");
     getData("25661");
-    getData("41852");*/
+    getData("41852");
     println("Retrieved data for all sattelites");
     //Earth & Background:
     background(0);
